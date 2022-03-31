@@ -1,6 +1,8 @@
 package com.javagyojin.board.frontcontroller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javagyojin.board.command.BCommand;
+import com.javagyojin.board.command.BListCommand;
 import com.javagyojin.board.command.BWriteCommand;
 
 /**
@@ -58,11 +61,15 @@ public class BFrontController extends HttpServlet {
 			command.excute(request, response);			
 			viewPage = "list.do";
 		} else if(com.equals("/list.do")) {
-//			command = new BListCommand();
-			
+			command = new BListCommand();
+			command.excute(request, response);
 			viewPage = "list.jsp";
+//			response.sendRedirect(viewPage);//기존의 request 객체의 내용을 사용하지 못함
 		}
-			
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
+		//기존 request 객체를 인수로 넣어서 forward 하므로 기존 request 객체의 내용을 사용할 수 있음
 		
 	}
 
