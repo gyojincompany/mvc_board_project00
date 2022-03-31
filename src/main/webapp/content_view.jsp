@@ -10,7 +10,8 @@
 	<h2>글 내용 보기</h2>
 	<hr>
 	<table width="500" cellpadding="0" cellspacing="0" border=1>
-		<form action="" mehtod="post">
+		<form action="modify.do" mehtod="post">
+		<input type="hidden" name="bid" value="${content_view.bid}">
 		<tr>
 			<td>번호</td>
 			<td>${content_view.bid}</td>

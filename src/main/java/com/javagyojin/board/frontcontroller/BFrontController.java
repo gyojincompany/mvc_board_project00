@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.javagyojin.board.command.BCommand;
 import com.javagyojin.board.command.BContentCommand;
 import com.javagyojin.board.command.BListCommand;
+import com.javagyojin.board.command.BModifyCommand;
 import com.javagyojin.board.command.BWriteCommand;
 
 /**
@@ -70,6 +71,10 @@ public class BFrontController extends HttpServlet {
 			command = new BContentCommand();
 			command.excute(request, response);
 			viewPage = "content_view.jsp";
+		} else if(com.equals("/modify.do")) {
+			command = new BModifyCommand();
+			command.excute(request, response);
+			viewPage = "list.do";
 		}
 		
 		
