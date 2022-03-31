@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.javagyojin.board.command.BCommand;
 import com.javagyojin.board.command.BContentCommand;
+import com.javagyojin.board.command.BDeleteCommand;
 import com.javagyojin.board.command.BListCommand;
 import com.javagyojin.board.command.BModifyCommand;
+import com.javagyojin.board.command.BReplyViewCommand;
 import com.javagyojin.board.command.BWriteCommand;
 
 /**
@@ -75,6 +77,14 @@ public class BFrontController extends HttpServlet {
 			command = new BModifyCommand();
 			command.excute(request, response);
 			viewPage = "list.do";
+		} else if(com.equals("/delete.do")) {
+			command = new BDeleteCommand();
+			command.excute(request, response);
+			viewPage = "list.do";
+		} else if(com.equals("/reply_view.do")) {
+			command = new BReplyViewCommand();
+			command.excute(request, response);
+			viewPage = "reply_view.jsp";
 		}
 		
 		
