@@ -104,6 +104,8 @@ public class BDao {
 	
 	public BDto contentView(String strId) {
 		
+		upHit(strId);//조회수를 +1 해주는 함수 호출
+		
 //		ArrayList<BDto> dtos = new ArrayList<BDto>();
 		BDto dto = null;
 		Connection conn = null;
@@ -166,6 +168,33 @@ public class BDao {
 			pstmt.setString(2, btitle);
 			pstmt.setString(3, bcontent);
 			pstmt.setInt(4, Integer.parseInt(bid));
+			int ret = pstmt.executeUpdate();//데이터 수정이 성공하면 1 반환
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	private void upHit(String bId) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = datasource.getConnection();
+			String query = "update mvc_board set bhit = bhit + 1 where bid=?";
+			pstmt = conn.prepareStatement(query);			
+			pstmt.setString(1, bId);
 			int ret = pstmt.executeUpdate();//데이터 수정이 성공하면 1 반환
 		} catch (Exception e) {
 			e.printStackTrace();
