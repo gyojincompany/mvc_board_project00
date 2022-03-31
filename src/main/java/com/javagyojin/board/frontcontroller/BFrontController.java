@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javagyojin.board.command.BCommand;
+import com.javagyojin.board.command.BContentCommand;
 import com.javagyojin.board.command.BListCommand;
 import com.javagyojin.board.command.BWriteCommand;
 
@@ -65,7 +66,15 @@ public class BFrontController extends HttpServlet {
 			command.excute(request, response);
 			viewPage = "list.jsp";
 //			response.sendRedirect(viewPage);//기존의 request 객체의 내용을 사용하지 못함
+		} else if(com.equals("/content_view.do")) {
+			command = new BContentCommand();
+			command.excute(request, response);
+			viewPage = "content_view.jsp";
 		}
+		
+		
+		
+		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

@@ -102,5 +102,58 @@ public class BDao {
 		return dtos;
 	}
 	
+	public BDto contentView(String strId) {
+		
+//		ArrayList<BDto> dtos = new ArrayList<BDto>();
+		BDto dto = null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultset = null;
+		
+		try {
+			conn = datasource.getConnection();
+			String query = "select * from mvc_board where bid = ?";
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, strId);
+			resultset = pstmt.executeQuery();
+			
+			while(resultset.next()) {
+				int bId = resultset.getInt("bid");
+				String bName = resultset.getString("bname");
+				String bTitle = resultset.getString("btitle");
+				String bContent = resultset.getString("bcontent");
+				Timestamp bDate = resultset.getTimestamp("bdate");
+				int bHit = resultset.getInt("bhit");
+				int bGroup = resultset.getInt("bgroup");
+				int bStep = resultset.getInt("bstep");
+				int bIndent = resultset.getInt("bindent");
+				
+				dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);								
+				
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultset != null) {
+					resultset.close();
+				}				
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return dto;
+	}
+	
+	
 	
 }
